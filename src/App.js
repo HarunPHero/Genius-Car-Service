@@ -3,7 +3,7 @@ import "./App.css";
 import About from "./Pages/About/About";
 import Checkout from "./Pages/Checkout/Checkout/Checkout";
 import AddService from "./Pages/Home/Addservice/AddService";
-
+import {ToastContainer} from 'react-toastify'
 import Home from "./Pages/Home/Home/Home";
 import Login from "./Pages/Login/Login/Login";
 import Register from "./Pages/Login/Register/Register";
@@ -13,6 +13,7 @@ import ServiceDetail from "./Pages/ServiceDetail/ServiceDetail";
 import Footer from "./Pages/Shared/Footer/Footer";
 import Header from "./Pages/Shared/Header/Header";
 import NotFound from "./Pages/Shared/NotFound/NotFound";
+import Order from "./orders/Order";
 
 function App() {
   return (
@@ -29,7 +30,7 @@ function App() {
 
         <Route path="/register" element={<Register></Register>}></Route>
         <Route
-          path="/checkout"
+          path="/checkout/:serviceId"
           element={
             <RequireAuth>
               <Checkout></Checkout>
@@ -53,8 +54,10 @@ function App() {
           }
         ></Route>
         <Route path="*" element={<NotFound></NotFound>}></Route>
+        <Route path="/order" element={<RequireAuth><Order></Order></RequireAuth>}></Route>
       </Routes>
       <Footer></Footer>
+      <ToastContainer/>
     </div>
   );
 }

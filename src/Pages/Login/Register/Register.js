@@ -8,6 +8,7 @@ import Loading from '../../Shared/Loading/Loading';
 
 const Register = () => {
     const [agree, setAgree] = useState(false);
+    const [err, setErr] = useState("")
     const [
         createUserWithEmailAndPassword,
         user,
@@ -29,12 +30,19 @@ const Register = () => {
     if (user) {
      console.log('user', user);  
     }
-
+    
     const handleRegister = async (event) => {
         event.preventDefault();
         const name = event.target.name.value;
         const email = event.target.email.value;
         const password = event.target.password.value;
+        if(password.length < 6){
+            setErr("password must be 6 characters long")
+            return
+        }
+        else{
+            setErr("")
+        }
         // const agree = event.target.terms.checked;
 
         await createUserWithEmailAndPassword(email, password);
@@ -50,7 +58,7 @@ const Register = () => {
                 <input type="text" name="name" id="" placeholder='Your Name' />
 
                 <input type="email" name="email" id="" placeholder='Email Address' required />
-
+                <h5 className='text-danger'>{err}</h5>
                 <input type="password" name="password" id="" placeholder='Password' required />
                 <input onClick={() => setAgree(!agree)} type="checkbox" name="terms" id="terms" />
                 {/* <label className={agree ? 'ps-2': 'ps-2 text-danger'} htmlFor="terms">Accept Genius Car Terms and Conditions</label> */}
@@ -60,6 +68,7 @@ const Register = () => {
                     className='w-50 mx-auto btn btn-primary mt-2'
                     type="submit"
                     value="Register" />
+                    <h6 className='text-primary'>Note: You can't create multiple accounts with one email address</h6>
             </form>
             <p>Already have an account? <Link to="/login" className='text-primary pe-auto text-decoration-none' onClick={navigateLogin}>Please Login</Link> </p>
             <SocialLogin></SocialLogin>
